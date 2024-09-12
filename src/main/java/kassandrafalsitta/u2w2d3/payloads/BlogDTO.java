@@ -1,9 +1,6 @@
 package kassandrafalsitta.u2w2d3.payloads;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.util.UUID;
@@ -21,6 +18,7 @@ public record BlogDTO (
         String content,
         @NotNull(message = "Il tempo di lettura è obbligatorio")
         @Positive(message = "Il tempo di lettura deve essere un valore positivo")
+        @Min(value = 1, message = "Il tempo di lettura deve essere maggiore o uguale a 1.")
         double readingTime,
         @NotNull(message = "L'UUID è obbligatorio")
         UUID authorId){}
