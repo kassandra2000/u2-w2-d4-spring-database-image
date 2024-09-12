@@ -2,10 +2,9 @@ package kassandrafalsitta.u2w2d3.services;
 
 import kassandrafalsitta.u2w2d3.entities.Author;
 import kassandrafalsitta.u2w2d3.entities.Blog;
-import kassandrafalsitta.u2w2d3.entities.BlogPayload;
+import kassandrafalsitta.u2w2d3.payloads.BlogDTO;
 import kassandrafalsitta.u2w2d3.exceptions.BadRequestException;
 import kassandrafalsitta.u2w2d3.exceptions.NotFoundException;
-import kassandrafalsitta.u2w2d3.repositories.AuthorsRepository;
 import kassandrafalsitta.u2w2d3.repositories.BlogsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,7 +29,7 @@ public class BlogService {
         return this.blogsRepository.findAll(pageable);
     }
 
-    public Blog saveBlog(BlogPayload body) {
+    public Blog saveBlog(BlogDTO body) {
         Optional<Blog> titleBlog = blogsRepository.findByTitle(body.getTitle());
         Optional<Blog> contentBlog = blogsRepository.findByContent(body.getContent());
         if (titleBlog.isPresent() && contentBlog.isPresent()) {
@@ -45,7 +44,7 @@ public class BlogService {
         return this.blogsRepository.findById(blogId).orElseThrow(() -> new NotFoundException(blogId));
     }
 
-    public Blog findByIdAndUpdate(UUID blogId, BlogPayload updatedBlog) {
+    public Blog findByIdAndUpdate(UUID blogId, BlogDTO updatedBlog) {
         Blog found = findById(blogId);
         found.setCategory(updatedBlog.getCategory());
         found.setTitle(updatedBlog.getTitle());

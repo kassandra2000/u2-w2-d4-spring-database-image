@@ -1,5 +1,6 @@
 package kassandrafalsitta.u2w2d3.exceptions;
 
+import kassandrafalsitta.u2w2d3.payloads.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -11,20 +12,20 @@ import java.time.LocalDateTime;
 public class ExceptionsHandler {
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorsPayload handleBadRequest(BadRequestException ex){
-        return new ErrorsPayload(ex.getMessage(), LocalDateTime.now());
+    public ErrorDTO handleBadRequest(BadRequestException ex){
+        return new ErrorDTO(ex.getMessage(), LocalDateTime.now());
     }
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND) // 404
-    public ErrorsPayload handleNotFound(NotFoundException ex){
-        return new ErrorsPayload(ex.getMessage(), LocalDateTime.now());
+    public ErrorDTO handleNotFound(NotFoundException ex){
+        return new ErrorDTO(ex.getMessage(), LocalDateTime.now());
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // 500
-    public ErrorsPayload handleGenericErrors(Exception ex){
+    public ErrorDTO handleGenericErrors(Exception ex){
         ex.printStackTrace();
-        return new ErrorsPayload("Problema lato server, giuro che lo risolveremo presto!", LocalDateTime.now());
+        return new ErrorDTO("Problema lato server, giuro che lo risolveremo presto!", LocalDateTime.now());
     }
 }
