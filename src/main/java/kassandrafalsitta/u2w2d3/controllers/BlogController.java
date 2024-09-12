@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -52,7 +54,7 @@ public class BlogController {
     }
 
     @PutMapping("/{blogId}")
-    private Blog findBlogByIdAndUpdate(@PathVariable UUID blogId, @RequestBody BlogDTO body) {
+    private Blog findBlogByIdAndUpdate(@PathVariable UUID blogId, @RequestBody BlogDTO body)  {
         return blogService.findByIdAndUpdate(blogId, body);
     }
 
@@ -60,5 +62,10 @@ public class BlogController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     private void findBlogByIdAndDelete(@PathVariable UUID blogId){
         blogService.findByIdAndDelete(blogId);
+    }
+
+    @PostMapping("/{blogId}/cover")
+    public Blog uploadCover(@PathVariable UUID blogId,@RequestParam("cover") MultipartFile image) throws IOException {
+        return  this.blogService.uploadImage(blogId,image);
     }
 }

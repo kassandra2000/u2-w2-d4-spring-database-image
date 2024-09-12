@@ -1,6 +1,8 @@
 package kassandrafalsitta.u2w2d3.payloads;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -17,7 +19,8 @@ public record BlogDTO (
         @NotEmpty(message = "Il contenuto è obbligatorio")
         @Size(min = 3, max = 100, message = "Il contenuto deve essere compreso tra 3 e 100 caratteri")
         String content,
-        @NotEmpty(message = "Il tempo di lettura è obbligatorio")
+        @NotNull(message = "Il tempo di lettura è obbligatorio")
+        @Positive(message = "Il tempo di lettura deve essere un valore positivo")
         double readingTime,
-        @NotEmpty(message = "L'UUID è obbligatorio")
+        @NotNull(message = "L'UUID è obbligatorio")
         UUID authorId){}

@@ -26,10 +26,11 @@ public class Author {
 
 
     //costruttore
-    public Author(String name, String surname, String email, LocalDate dateOfBirth) {
+    public Author(String name, String surname, String email, LocalDate dateOfBirth,String avatar) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.dateOfBirth = dateOfBirth;
+        this.avatar= avatar;
     }
 }

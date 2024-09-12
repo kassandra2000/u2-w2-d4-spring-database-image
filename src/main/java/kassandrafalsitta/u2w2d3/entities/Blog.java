@@ -26,12 +26,12 @@ public class Blog {
     private Author authorId;
 
     //costruttore
-    public Blog(String category, String title, String cover, String content, double readingTime, Author authorId) {
+    public Blog(String category, String title, String content, double readingTime, Author authorId, String cover) {
         this.category = category;
         this.title = title;
-        this.cover = cover;
         this.content = content;
         this.readingTime = readingTime;
         this.authorId = authorId;
+        this.cover = cover;
     }
 }
