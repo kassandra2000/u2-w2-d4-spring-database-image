@@ -9,6 +9,9 @@ import kassandrafalsitta.u2w2d3.exceptions.BadRequestException;
 import kassandrafalsitta.u2w2d3.exceptions.NotFoundException;
 import kassandrafalsitta.u2w2d3.payloads.AuthorDTO;
 import kassandrafalsitta.u2w2d3.repositories.AuthorsRepository;
+import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
+import kong.unirest.Unirest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,6 +49,24 @@ public class AuthorService {
                 body.email(),
                 body.dateOfBirth(),
                 "https://ui-avatars.com/api/?name="+body.name()+"+"+body.surname());
+
+
+
+        // Invio dell'email di conferma tramite Mailgun
+        try {
+            HttpResponse<JsonNode> response = Unirest.post(
+                            "https://api.mailgun.net/v3/sandboxeaca3dc918a948d2b6ed45898d396c0c.mailgun.org/messages")
+                    .basicAuth("api", "8baf8bd8e91d3c0218e927079a67cca7-826eddfb-225c836b")
+                    .queryString("from", "kafalsitta@gmail.com")
+//                    .queryString("to", body.email())
+                    .queryString("to", "falsittakassy@gmail.com")
+                    .queryString("subject", "Registrazione avvenuta con successo!")
+                    .queryString("text", "Complimenti per esserti registrato!")
+                    .asJson();
+        } catch (Exception e) {
+            throw new RuntimeException("Errore durante l'invio dell'email di conferma");
+        }
+
 
         return this.authorsRepository.save(newAuthor);
     }
