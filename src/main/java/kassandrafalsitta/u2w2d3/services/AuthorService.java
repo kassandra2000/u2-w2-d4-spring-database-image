@@ -55,8 +55,8 @@ public class AuthorService {
         // Invio dell'email di conferma tramite Mailgun
         try {
             HttpResponse<JsonNode> response = Unirest.post(
-                            "https://api.mailgun.net/v3/sandboxeaca3dc918a948d2b6ed45898d396c0c.mailgun.org/messages")
-                    .basicAuth("api", "8baf8bd8e91d3c0218e927079a67cca7-826eddfb-225c836b")
+                            "https://api.mailgun.net/v3/"+"${mailgun.domain}"+"/messages")
+                    .basicAuth("api", "${mailgun.key}")
                     .queryString("from", "kafalsitta@gmail.com")
 //                    .queryString("to", body.email())
                     .queryString("to", "falsittakassy@gmail.com")
